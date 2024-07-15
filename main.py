@@ -7,6 +7,7 @@
 #   Rule 2 – Should have at least 1 Upper Case
 #   Rule 3 – Should have at least 1 numeric number 
 
+
 import re
 
 Constrains = [
@@ -32,8 +33,8 @@ Constrains = [
     },
     {
         'title': 'Password',
-        'regex': '^(?=.*[A-Z]).{8,}$',
-        'message': 'Password must be minimum 8 characters and should have at least 1 Upper Case: '
+        'regex': '^(?=.*[A-Z])(?=.*[0-9]).{8,}$',
+        'message': 'Password must be minimum 8 characters and should have at least 1 Upper Case and 1 numeric number: '
     }
 ]
 
