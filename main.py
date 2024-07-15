@@ -6,7 +6,7 @@
 #   Rule 1 – minimum 8 Characters
 #   Rule 2 – Should have at least 1 Upper Case
 #   Rule 3 – Should have at least 1 numeric number 
-
+#   Rule 4 – Should hava exaclty one special character 
 
 import re
 
@@ -31,11 +31,11 @@ Constrains = [
         'regex': '^91 [0-9]{10}$',
         'message': 'Country code follow by space and 10 digit number: '
     },
-    {
-        'title': 'Password',
-        'regex': '^(?=.*[A-Z])(?=.*[0-9]).{8,}$',
-        'message': 'Password must be minimum 8 characters and should have at least 1 Upper Case and 1 numeric number: '
-    }
+    # {
+    #     'title': 'Password',
+    #     'regex': '^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$&]).{8,}$',
+    #     'message': 'Password must be minimum 8 characters and should have at least 1 Upper Case and 1 numeric number: '
+    # }
 ]
 
 def check_validity(regex, value):
@@ -55,5 +55,24 @@ def validate():
         print(f'Valid {constrain["title"]}: {value}')
     return data
 
+def validate_password(passwords_input):
+    regex = re.compile('^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$&]).{8,}$')
+    if re.search(regex, passwords_input):
+        items = re.finditer(r'[@#$&]', passwords_input)
+        if len(list(items)) == 1:
+            return True
+        else:
+            return False
+
+
 data = validate()
+
+data['Password'] = input("Password must be minimum 8 characters and should have at least 1 Upper Case and 1 numeric number: ")
+while not validate_password(data['Password']):
+    print("Invalid Password. Please try again.")
+    data['Password'] = input("Password must be minimum 8 characters and should have at least 1 Upper Case and 1 numeric number: ")
+
 print(data)
+
+
+
