@@ -1,0 +1,65 @@
+Symbols:
+	.: Matches any character (except newline)
+    ^: Matches the start of the string
+    $: Matches the end of the string
+    |: Matches either the expression before or after the |
+    ( ): Groups expressions and captures a match
+    []: Matches any character within the brackets
+    *: Matches 0 or more repetitions of the preceding element
+    +: Matches 1 or more repetitions of the preceding element
+    ?: Matches 0 or 1 repetition of the preceding element
+    {n}: Matches exactly n repetitions of the preceding element
+    {n,}: Matches n or more repetitions of the preceding element
+    {n,m}: Matches at least n and at most m repetitions of the preceding element
+    \: Escapes special characters (e.g., \. matches a literal period)
+
+
+Character Classes:
+
+    \d: Matches any digit (0-9)
+    \D: Matches any non-digit character
+    \w: Matches any word character (alphanumeric plus underscore)
+    \W: Matches any non-word character
+    \s: Matches any whitespace character (space, tab, newline, etc.)
+    \S: Matches any non-whitespace character
+
+Anchors:
+
+    ^: Matches the start of the string
+    $: Matches the end of the string
+    \b: Matches a word boundary (between a word and a non-word character)
+    \B: Matches a non-word boundary
+
+Grouping and Capturing:
+
+    ( ): Groups expressions and captures a match
+    (?P<name>pattern): Names a group, allowing access to the match via the group name
+
+Escaping:
+
+    \: Escapes special characters (e.g., \. matches a literal period)
+
+Repetition:
+
+    *: Matches 0 or more repetitions of the preceding element
+    +: Matches 1 or more repetitions of the preceding element
+    ?: Matches 0 or 1 repetition of the preceding element
+    {n}: Matches exactly n repetitions of the preceding element
+    {n,}: Matches n or more repetitions of the preceding element
+    {n,m}: Matches at least n and at most m repetitions of the preceding element
+
+Other:
+
+    |: Matches either the expression before or after the |
+    (?=pattern): Positive lookahead assertion (matches if the pattern matches, but doesn't consume it)
+    (?!pattern): Negative lookahead assertion (matches if the pattern doesn't match)
+    (?<=pattern): Positive lookbehind assertion (matches if the pattern matches before the current position)
+    (?<!pattern): Negative lookbehind assertion (matches if the pattern doesn't match before the current position)
+
+Flags:
+
+    re.I (or re.IGNORECASE): Makes the regex case-insensitive
+    re.M (or re.MULTILINE): Makes the regex match across multiple lines
+    re.S (or re.DOTALL): Makes the regex match any character, including newlines
+    re.U (or re.UNICODE): Makes the regex match Unicode characters
+    re.X (or re.VERBOSE): Allows you to write regex patterns in a more readable format

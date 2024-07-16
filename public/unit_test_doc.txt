@@ -1,0 +1,111 @@
+[1] Assertion Methods
+
+    assertEqual(a, b): Checks if a is equal to b.
+
+        self.assertEqual(2 + 2, 4)
+
+    assertNotEqual(a, b): Checks if a is not equal to b.
+
+        self.assertNotEqual(2 + 2, 5)
+
+    assertTrue(a): Checks if a is True.
+
+        self.assertTrue(2 + 2 == 4)
+
+    assertFalse(a): Checks if a is False.
+
+        self.assertFalse(2 + 2 == 5)
+
+    assertIs(a, b): Checks if a is the same object as b.
+
+        a = [1, 2, 3]
+        b = a
+        self.assertIs(a, b)
+
+    assertIsNot(a, b): Checks if a is not the same object as b.
+
+        a = [1, 2, 3]
+        b = [1, 2, 3]
+        self.assertIsNot(a, b)
+
+    assertIn(a, b): Checks if a is in b.
+
+        self.assertIn(2, [1, 2, 3])
+
+    assertNotIn(a, b): Checks if a is not in b.
+
+        self.assertNotIn(4, [1, 2, 3])
+
+    assertIsInstance(a, b): Checks if a is an instance of b.
+
+        self.assertIsInstance(2, int)
+
+    assertNotIsInstance(a, b): Checks if a is not an instance of b.
+
+        self.assertNotIsInstance(2, str)
+
+    assertRaises(exception, callable, *args, **kwargs): Checks if callable raises exception when called with *args and **kwargs.
+
+        with self.assertRaises(ValueError):
+        int('abc')
+
+    assertWarns(warning, callable, *args, **kwargs): Checks if callable raises warning when called with *args and **kwargs.
+
+        with self.assertWarns(DeprecationWarning):
+            import deprecated_module
+
+    assertLogs(logger, level): Checks if logger logs a message at level level.
+
+        with self.assertLogs('my_logger', level=logging.INFO):
+            logging.info('This is an info message')
+
+
+[2] Other Methods
+
+    setUp(): Called before each test function to set up the testing environment.
+
+        def setUp(self):
+            self.fixture = MyFixture()
+
+    tearDown(): Called after each test function to clean up the testing environment.
+
+        def tearDown(self):
+            self.fixture.cleanup()
+
+    setUpClass(): Called before the first test function in a test case to set up the testing environment.
+
+        @classmethod
+        def setUpClass(cls):
+            cls.fixture = MyFixture()
+
+    tearDownClass(): Called after the last test function in a test case to clean up the testing environment.
+
+        @classmethod
+        def tearDownClass(cls):
+            cls.fixture.cleanup()
+
+Running Tests
+
+ a. unittest.main(): Runs all tests in a module.
+
+    if __name__ == '__main__':
+        unittest.main()
+
+
+b. unittest.TestLoader(): Loads tests from a module or package.
+
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromModule(MyTestCase)
+
+
+c. unittest.TestSuite(): A collection of test cases.
+
+    suite = unittest.TestSuite([MyTestCase, MyOtherTestCase])
+
+
+d. unittest.TextTestRunner(): Runs a test suite and displays the results.
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+
+
