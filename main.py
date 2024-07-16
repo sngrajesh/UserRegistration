@@ -31,48 +31,51 @@ Constrains = [
         'regex': '^91 [0-9]{10}$',
         'message': 'Country code follow by space and 10 digit number: '
     },
-    # {
-    #     'title': 'Password',
-    #     'regex': '^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$&]).{8,}$',
-    #     'message': 'Password must be minimum 8 characters and should have at least 1 Upper Case and 1 numeric number: '
-    # }
+    {
+        'title': 'Password',
+        'regex': '^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$&]).{8,}$',
+        'message': 'Password must be minimum 8 characters and should have at least 1 Upper Case and 1 numeric number and exaclty one special character: '
+    }
 ]
 
+# Regex search utility
 def check_validity(regex, value):
     if re.search(regex, value):
         return True
     else:
         return False
 
-def validate():
-    data = {}
-    for constrain in Constrains:
-        value = input(constrain['message'])
-        while not check_validity(constrain['regex'], value):
-            print(f'Invalid input for {constrain["title"]}. Please try again.')
-            value = input(constrain['message'])
-        data[constrain['title']] = value
-        print(f'Valid {constrain["title"]}: {value}')
-    return data
+def validate_first_name(user_input):
+    regex = re.compile(Constrains[0]['regex'])  
+    return check_validity(regex, user_input)
 
-def validate_password(passwords_input):
-    regex = re.compile('^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$&]).{8,}$')
-    if re.search(regex, passwords_input):
-        items = re.finditer(r'[@#$&]', passwords_input)
-        if len(list(items)) == 1:
-            return True
-        else:
-            return False
+def validate_last_name(user_input):
+    regex = re.compile(Constrains[1]['regex']) 
+    return check_validity(regex, user_input)
 
+def validate_email(user_input):
+    regex = re.compile(Constrains[2]['regex']) 
+    return check_validity(regex, user_input)
 
-data = validate()
+def validate_phone(user_input):
+    regex = re.compile(Constrains[3]['regex'])
+    return check_validity(regex, user_input)
 
-data['Password'] = input("Password must be minimum 8 characters and should have at least 1 Upper Case and 1 numeric number: ")
-while not validate_password(data['Password']):
-    print("Invalid Password. Please try again.")
-    data['Password'] = input("Password must be minimum 8 characters and should have at least 1 Upper Case and 1 numeric number: ")
-
-print(data)
+def validate_password(user_input):
+    regex = re.compile(Constrains[4]['regex'])  
+    if check_validity(regex, user_input):
+        items = re.finditer(r'[@#$&]', user_input)
+        return len(list(items)) == 1
 
 
-
+if __name__ == "__main__":
+    while not validate_first_name(input(Constrains[0]['message'])):
+        pass
+    while not validate_last_name(input(Constrains[1]['message'])):
+        pass
+    while not validate_email(input(Constrains[2]['message'])):
+        pass
+    while not validate_phone(input(Constrains[3]['message'])):
+        pass
+    while not validate_password(input(Constrains[4]['message'])):
+        pass
