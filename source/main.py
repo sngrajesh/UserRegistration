@@ -9,8 +9,33 @@
 #   Rule 4 – Should hava exaclty one special character 
 
 import re
+import logging
 
-Constrains = [
+# Create logger
+logger = logging.getLogger('my_logger')
+logger.setLevel(logging.INFO)
+
+# Create console handler and set level to info
+ch = logging.StreamHandler()
+ch.setLevel(logging.INFO)
+
+# Create file handler and set level to warning
+fh = logging.FileHandler('app.log')
+fh.setLevel(logging.WARNING)
+
+# Create formatter
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# Add formatter to handlers
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+
+# Add handlers to logger
+logger.addHandler(ch)
+logger.addHandler(fh)
+
+
+Constraints = [
     {
         'title': 'First Name',
         'regex': r'^[A-Z][a-z]{2,}$',
@@ -41,70 +66,117 @@ Constrains = [
 # Regex search utility
 def check_validity(regex, value):
     """
-    Description: This function will check if the given value matches with the given regex
+    Description: This function checks if the given value matches the given regex.
     Arguments: {regex :string, value : string}
     Return: {matched :boolean}
     """
-    if re.search(regex, value):
-        return True
-    else:
-        return False
+    return bool(re.search(regex, value))
 
 def validate_first_name(user_input):
     """
-    Description: Check if the given value matches with the given regex using utility function -> check_validity
+    Description: Check if the given value matches the regex for the first name.
     Arguments: {user_input : string}
     Return: {matched :boolean}
     """
-    regex = re.compile(Constrains[0]['regex'])  
+    regex = re.compile(Constraints[0]['regex'])  
     return check_validity(regex, user_input)
 
 def validate_last_name(user_input):
     """
-    Description: Check if the given value matches with the given regex using utility function -> check_validity
+    Description: Check if the given value matches the regex for the last name.
     Arguments: {user_input : string}
     Return: {matched :boolean}
     """
-    regex = re.compile(Constrains[1]['regex']) 
+    regex = re.compile(Constraints[1]['regex']) 
     return check_validity(regex, user_input)
 
 def validate_email(user_input):
     """
-    Description: Check if the given value matches with the given regex using utility function -> check_validity
+    Description: Check if the given value matches the regex for the email.
     Arguments: {user_input : string}
     Return: {matched :boolean}
     """
-    regex = re.compile(Constrains[2]['regex']) 
+    regex = re.compile(Constraints[2]['regex']) 
     return check_validity(regex, user_input)
 
 def validate_phone(user_input):
     """
-    Description: Check if the given value matches with the given regex using utility function -> check_validity
+    Description: Check if the given value matches the regex for the phone number.
     Arguments: {user_input : string}
     Return: {matched :boolean}
     """
-    regex = re.compile(Constrains[3]['regex'])
+    regex = re.compile(Constraints[3]['regex'])
     return check_validity(regex, user_input)
 
 def validate_password(user_input):
     """
-    Description: Check if the given value matches with the given regex using utility function -> check_validity and check only unique special characters exist
+    Description: Check if the given value matches the regex for the password and contains exactly one special character.
     Arguments: {user_input : string}
     Return: {matched :boolean}
     """
-    regex = re.compile(Constrains[4]['regex'])  
+    regex = re.compile(Constraints[4]['regex'])  
     items = re.finditer(r'[@#$&]', user_input)
     return check_validity(regex, user_input) and len(list(items)) == 1
 
 
 if __name__ == "__main__":
-    while not validate_first_name(input(Constrains[0]['message'])):
-        pass
-    while not validate_last_name(input(Constrains[1]['message'])):
-        pass
-    while not validate_email(input(Constrains[2]['message'])):
-        pass
-    while not validate_phone(input(Constrains[3]['message'])):
-        pass
-    while not validate_password(input(Constrains[4]['message'])):
-        pass
+    while True:
+        try:
+            user_input = input(Constraints[0]['message'])
+            if validate_first_name(user_input):
+                logger.info("Validated First Name")
+                break
+            else:
+                raise ValueError("Invalid First Name")
+        except ValueError as ve:
+            logger.error(f"Validation error: {ve}")
+            print(ve)
+
+    while True:
+        try:
+            user_input = input(Constraints[1]['message'])
+            if validate_last_name(user_input):
+                logger.info("Validated Last Name")
+                break
+            else:
+                raise ValueError("Invalid Last Name")
+        except ValueError as ve:
+            logger.error(f"Validation error: {ve}")
+            print(ve)
+
+    while True:
+        try:
+            user_input = input(Constraints[2]['message'])
+            if validate_email(user_input):
+                logger.info("Validated Email")
+                break
+            else:
+                raise ValueError("Invalid Email")
+        except ValueError as ve:
+            logger.error(f"Validation error: {ve}")
+            print(ve)
+
+    while True:
+        try:
+            user_input = input(Constraints[3]['message'])
+            if validate_phone(user_input):
+                logger.info("Validated Phone Number")
+                break
+            else:
+                raise ValueError("Invalid Phone Number")
+        except ValueError as ve:
+            logger.error(f"Validation error: {ve}")
+            print(ve)
+
+    while True:
+        try:
+            user_input = input(Constraints[4]['message'])
+            if validate_password(user_input):
+                logger.info("Validated Password")
+                break
+            else:
+                raise ValueError("Invalid Password")
+        except ValueError as ve:
+            logger.error(f"Validation error: {ve}")
+            print(ve)
+
